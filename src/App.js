@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+
+import { useState } from 'react';
 import './App.css';
+import BlogPostForm from './components/BogPostForm/BlogPostForm';
+import ContactForm from './components/ContactForm/ContactForm';
 
 function App() {
+const [selection, setSelection] = useState('blogfrom')
+
+let html;
+
+if(selection === 'blogForm') {
+  html = <BlogPostForm />
+} else {
+  html = <ContactForm />
+}
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <button type="button" onClick={() => setSelection('blogfrom')}>Blog Form</button>
+        <button type="button" onClick={() => setSelection('contactForm')}>Contact Form</button>
       </header>
+
+    {html}
+
     </div>
   );
 }
