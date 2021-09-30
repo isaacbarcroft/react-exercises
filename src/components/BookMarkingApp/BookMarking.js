@@ -2,10 +2,26 @@ import { useState, useEffect } from "react";
 
 function BookMarking(){
 
-    const [bookmarks, setBookmarks] = useState([])
+    const [bookmarks, setBookmarks] = useState([{
+        url: 'a aldskfjldsf',
+        title: 'a dlkfjldskf',
+        tag: 'a'
+    }, {
+        url: 'a aldskfjldsf',
+        title: 'a dlkfjldskf',
+        tag: 'a'
+    }, {
+        url: 'b aldskfjldsf',
+        title: 'b dlkfjldskf',
+        tag: 'b'
+    }])
+
     const [url, setUrl] = useState('')
     const [title, setTitle] = useState('')
     const [tag, setTag] = useState('')
+    const [filter, setFilter] = useState();
+
+
 
     useEffect(() => {
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
@@ -37,9 +53,22 @@ function handleSubmit(event){
     
 }
 function filterTag(event){
-   const newBookmark = bookmarks.filter(event)
-   console.log(newBookmark);
+
+   if(event.target.value === 'all'){
+    setFilter(null)
+   } else {
+    setFilter(event.target.value);
+   }
+   
 }
+
+    const bookmarksHTML = bookmarks
+        .filter(bookmark => filter ? bookmark.tag === filter : bookmark)
+        .map((bookmark, index) => <li key={index}>{bookmark.title}</li>);
+
+    const tags = bookmarks.map(bookmark => bookmark.tag);
+    const uniqueTags = [...new Set(tags)];
+    const optionsHTML = uniqueTags.map(tag=><option key={tag} value={tag}>{tag}</option>)
 
     return (
 <>
@@ -50,9 +79,14 @@ function filterTag(event){
             <button type="submit">Submit</button>
         </form>
         <select name="" id="" onChange={filterTag}>
-                <option value=""></option>
-                <option value=""></option>
-            </select>
+            <option value="all">All</option>
+            {optionsHTML}
+        </select>
+
+            <div>
+                {bookmarksHTML}
+
+            </div>
 </>
     )
 }
