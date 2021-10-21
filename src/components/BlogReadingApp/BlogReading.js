@@ -27,32 +27,19 @@ function BlogReadingApp(){
             },
         ])
     }, []);
-    
-
+    const blogHTML = <div><h2>{selection?.title}</h2><p>{selection?.text}</p></div>
+    //    console.log(selection)
+    //    console.log(selection.title)
     const blogList = blogs.map(blog => 
         <li key={blog.id}>
             <button className="nav nav-tabs nav-stacked" type="button" id={blog.id} onClick={() => setSelection(blog)}>{blog.title}</button>
         </li>
         );
-
- let html;
-
-if(selection){
-  html = <div>
-      <h2>{ selection.title}</h2>
-  <p>{selection.text}</p>
-  </div>;
-} else if ( selection === 'Second Blog')  {
-    html = <div><h2>{ selection.title}</h2><p>{selection.text}</p></div>;
-} else if ( selection === 'Third Blog')  {
-    html = <div><h2>{ selection.title}</h2><p>{selection.text}</p></div>;
-}
     
     return(
         <>
             <div>
-               <h2> {html}</h2>
-
+                {blogHTML}
             </div>
             <div> 
                 <ul>{blogList}</ul>
